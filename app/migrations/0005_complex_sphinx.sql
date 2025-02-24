@@ -1,0 +1,1 @@
+ALTER TABLE "all_articles" ADD COLUMN "journal_pages" text NOT NULL;

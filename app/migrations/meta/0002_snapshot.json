@@ -1,0 +1,391 @@
+{
+  "id": "7d933506-9113-437b-b717-14522dd187ed",
+  "prevId": "2dc6f10d-a942-4294-a967-4dfb9f3fb423",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.all_articles": {
+      "name": "all_articles",
+      "schema": "",
+      "columns": {
+        "article_id": {
+          "name": "article_id",
+          "type": "bigint",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "all_articles_article_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "9223372036854775807",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "abstract": {
+          "name": "abstract",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "journal_name": {
+          "name": "journal_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "journal_volume": {
+          "name": "journal_volume",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "journal_year": {
+          "name": "journal_year",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "journal_month": {
+          "name": "journal_month",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "article_url": {
+          "name": "article_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "doi": {
+          "name": "doi",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "views": {
+          "name": "views",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "check_journal_year": {
+          "name": "check_journal_year",
+          "value": "\"all_articles\".\"journal_year\" > 1900 and \"all_articles\".\"journal_year\" < 2100"
+        },
+        "check_journal_month": {
+          "name": "check_journal_month",
+          "value": "13 > \"all_articles\".\"journal_month\" and \"all_articles\".\"journal_month\" > 0"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.article_author": {
+      "name": "article_author",
+      "schema": "",
+      "columns": {
+        "article_id": {
+          "name": "article_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "author_id": {
+          "name": "author_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "article_author_article_id_all_articles_article_id_fk": {
+          "name": "article_author_article_id_all_articles_article_id_fk",
+          "tableFrom": "article_author",
+          "tableTo": "all_articles",
+          "columnsFrom": [
+            "article_id"
+          ],
+          "columnsTo": [
+            "article_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        },
+        "article_author_author_id_author_author_id_fk": {
+          "name": "article_author_author_id_author_author_id_fk",
+          "tableFrom": "article_author",
+          "tableTo": "author",
+          "columnsFrom": [
+            "author_id"
+          ],
+          "columnsTo": [
+            "author_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "article_author_article_id_author_id_pk": {
+          "name": "article_author_article_id_author_id_pk",
+          "columns": [
+            "article_id",
+            "author_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.article_jel_code": {
+      "name": "article_jel_code",
+      "schema": "",
+      "columns": {
+        "article_id": {
+          "name": "article_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "jel_code_id": {
+          "name": "jel_code_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "article_jel_code_article_id_all_articles_article_id_fk": {
+          "name": "article_jel_code_article_id_all_articles_article_id_fk",
+          "tableFrom": "article_jel_code",
+          "tableTo": "all_articles",
+          "columnsFrom": [
+            "article_id"
+          ],
+          "columnsTo": [
+            "article_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        },
+        "article_jel_code_jel_code_id_jel_code_jel_code_id_fk": {
+          "name": "article_jel_code_jel_code_id_jel_code_jel_code_id_fk",
+          "tableFrom": "article_jel_code",
+          "tableTo": "jel_code",
+          "columnsFrom": [
+            "jel_code_id"
+          ],
+          "columnsTo": [
+            "jel_code_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "article_jel_code_article_id_jel_code_id_pk": {
+          "name": "article_jel_code_article_id_jel_code_id_pk",
+          "columns": [
+            "article_id",
+            "jel_code_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.author": {
+      "name": "author",
+      "schema": "",
+      "columns": {
+        "author_id": {
+          "name": "author_id",
+          "type": "bigint",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "author_author_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "9223372036854775807",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "author_name": {
+          "name": "author_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.jel_code": {
+      "name": "jel_code",
+      "schema": "",
+      "columns": {
+        "jel_code_id": {
+          "name": "jel_code_id",
+          "type": "bigint",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "jel_code_jel_code_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "9223372036854775807",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "jel_code": {
+          "name": "jel_code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "jel_code_name": {
+          "name": "jel_code_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "jel_code_sector1": {
+          "name": "jel_code_sector1",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "jel_code_sector1_name": {
+          "name": "jel_code_sector1_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "jel_code_sector2": {
+          "name": "jel_code_sector2",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "jel_code_sector2_name": {
+          "name": "jel_code_sector2_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
