@@ -399,7 +399,7 @@ export type Database = {
       article_year_list: {
         Args: {
           category_level: string
-          category_value: string
+          category_value: string[]
         }
         Returns: {
           article_id: number

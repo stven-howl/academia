@@ -2,34 +2,14 @@ import { eq } from "drizzle-orm";
 import client from "~/supa_clients"
 
 export const getArticles = async ({
-    start_year, 
-    end_year, 
-    journal, 
-    subject
+    subjects
 }: {
-    start_year: number, 
-    end_year: number, 
-    journal?: string, 
-    subject?: string
+    subjects: string[]
 }) => {
     let query = client
-        .from("all_articles")
+        .rpc('article_year_list', {category_level: "sector2", category_value: subjects})
         .select("*")
-        .gte("journal_year", start_year)
-        .lte("journal_year", end_year)
         .order("journal_year", { ascending: false });
-
-    // if (journal && subject) {
-    //     query = query.eq("journal_name", journal).eq("jel_code_sector2", subject);
-    // }
-        
-    // if (journal && !subject) {
-    //     query = query.eq("journal_name", journal);
-    // }
-    
-    // if (subject && !journal) {
-    //     query = query.eq("jel_code_sector2", subject);
-    // }
 
     const { data, error } = await query;
     if (error) {

@@ -17,17 +17,16 @@ export const loader = async ({ request }: { request: Request }) => {
     // URL 파라미터에서 시작년도와 종료년도를 가져옴
     const startYear = parseInt(url.searchParams.get('startYear') || String(currentYear - 9));
     const endYear = parseInt(url.searchParams.get('endYear') || String(currentYear));
-    let subjects = (url.searchParams.get('subject') || "").split(',').filter(Boolean);
-    if (subjects.length === 0) {
-        subjects = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "Y", "Z"];
-    }
+    //let subjects = (url.searchParams.get('subject') || "").split(',').filter(Boolean);
+    let subjects = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "Y", "Z"];
+
     const subjectNames: { [key: string]: string } = {};
     for (const subject of subjects) {
         const name = await getSector2Name({ sector2_code: subject });
         subjectNames[subject] = name || subject;
     }
 
-    let articles = await getArticles({ start_year: startYear, end_year: endYear });
+    let articles = await getArticles({ subjects });
 
 
     let subjectsRatio: any[] = [];
