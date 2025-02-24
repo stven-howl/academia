@@ -1,13 +1,14 @@
-import { redirect } from "react-router";
+import { Link } from "react-router";
 
-export function loader() {
-  return redirect(`/trend_charts`);
-}
-
-export function Home() {
+export default function Home() {
   return (
-    <div>
-      <h1>Home</h1>
+    <div className="flex flex-col items-center justify-center h-screen">
+      <div>
+        <h1>Home</h1>
+      </div>
+      <div>
+        <Link to="/trend_charts">Trend Charts</Link>
+      </div>
     </div>
   );
 }
